@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131b">
+  <meta name="description" content="Deadly Server Manager is a native Windows desktop application for creating, running, monitoring, backing up, and managing Minecraft servers.">
+  <title>Deadly Server Manager</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1119;
+      --surface: #151c29;
+      --surface-2: #1b2535;
+      --text: #f4f6fb;
+      --muted: #aab4c5;
+      --accent: #94a9ff;
+      --accent-2: #b7c5ff;
+      --border: rgba(179, 194, 229, .16);
+      --green: #8ce0b1;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(79, 105, 190, .20), transparent 42rem),
+        radial-gradient(ellipse at 90% 12%, rgba(67, 132, 128, .12), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.7 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 22px 0; border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { font-weight: 750; letter-spacing: .2px; color: var(--text); }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; }
+    .hero { padding: 92px 0 66px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 11px; border: 1px solid var(--border);
+      border-radius: 999px; color: var(--green); background: rgba(140, 224, 177, .07);
+      font-size: 13px; font-weight: 650;
+    }
+    h1 { max-width: 820px; margin: 20px 0 14px; font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.04; letter-spacing: -2.8px; }
+    .gradient { background: linear-gradient(100deg, #dce4ff, #8ea7ff 55%, #8ce0ce); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { max-width: 720px; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.25rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 10px 17px; border-radius: 11px; border: 1px solid var(--border); font-weight: 700; }
+    .btn-primary { background: #aebeff; color: #111827; border-color: #aebeff; }
+    .btn-secondary { background: rgba(255,255,255,.04); color: var(--text); }
+    .meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+    .pill { padding: 5px 10px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: 13px; }
+    section { padding: 38px 0; }
+    .section-heading { margin: 0 0 8px; font-size: clamp(1.7rem, 4vw, 2.3rem); letter-spacing: -.8px; }
+    .section-intro { max-width: 720px; margin: 0 0 24px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .card { padding: 20px; border: 1px solid var(--border); border-radius: 16px; background: linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.018)); }
+    .card h3 { margin: 0 0 7px; font-size: 1.05rem; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .icon { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: 14px; border-radius: 10px; background: rgba(148,169,255,.12); color: var(--accent-2); font-weight: 800; }
+    .wide { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; align-items: stretch; }
+    .panel { padding: 24px; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); }
+    .panel p { color: var(--muted); }
+    .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .stack span { padding: 6px 10px; border-radius: 8px; background: var(--surface-2); color: #d6def0; font-size: 13px; }
+    .note { border-left: 3px solid var(--accent); padding: 3px 0 3px 15px; color: var(--muted); font-size: 14px; }
+    footer { margin-top: 42px; padding: 28px 0 40px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .wide { grid-template-columns: 1fr; }
+      .hero { padding-top: 65px; }
+      h1 { letter-spacing: -1.7px; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(100% - 28px, 1100px); }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { gap: 14px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top">DEADLY SERVER MANAGER</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#integrations">Integrations</a>
+        <a href="#technology">Technology</a>
+        <a href="#project">Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+      <section class="hero">
+        <span class="eyebrow">Windows desktop application · Version 0.1.0</span>
+        <h1>Manage your Minecraft servers.<br><span class="gradient">All in one place.</span></h1>
+        <p class="lead">
+          Deadly Server Manager is a native Windows application for importing, creating,
+          running, monitoring, updating, backing up, and managing local Minecraft servers.
+          It works locally without requiring a cloud account.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/probhai1sachin-coder/Deadly-Server-Manager">View project on GitHub ↗</a>
+          <a class="btn btn-secondary" href="https://github.com/probhai1sachin-coder/Deadly-Server-Manager/blob/main/README.md">Read documentation</a>
+        </div>
+        <div class="meta" aria-label="Platform and technology">
+          <span class="pill">Windows 10/11 · x64</span>
+          <span class="pill">Tauri 2</span>
+          <span class="pill">React 19</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">Rust</span>
+          <span class="pill">SQLite</span>
+        </div>
+      </section>
+
+      <section id="features">
+        <h2 class="section-heading">Built for server management</h2>
+        <p class="section-intro">Tools for common Minecraft server tasks, with verification and safeguards built into important operations.</p>
+        <div class="grid">
+          <article class="card"><div class="icon">01</div><h3>Server control</h3><p>Create and import servers, switch between registrations, and start, restart, or stop supported server processes.</p></article>
+          <article class="card"><div class="icon">02</div><h3>Plugin browser</h3><p>Discover plugins through supported providers, inspect project information, check updates, and manage staged installations.</p></article>
+          <article class="card"><div class="icon">03</div><h3>Backups & restore</h3><p>Create scoped backups and guarded restore points, with archive verification before success is reported.</p></article>
+          <article class="card"><div class="icon">04</div><h3>World management</h3><p>View active and archived worlds, inspect sizes and file counts, and use guarded world imports.</p></article>
+          <article class="card"><div class="icon">05</div><h3>Console & files</h3><p>Read live console output, inspect logs, and manage server files with protected-path checks.</p></article>
+          <article class="card"><div class="icon">06</div><h3>Health & diagnostics</h3><p>Review measured performance, readiness checks, operation history, and diagnostic reports.</p></article>
+        </div>
+      </section>
+
+      <section id="integrations">
+        <h2 class="section-heading">Content and server integrations</h2>
+        <p class="section-intro">Deadly Server Manager connects to supported Minecraft services for server software and plugin discovery.</p>
+        <div class="grid">
+          <article class="card"><h3>Modrinth</h3><p>Provider integration for plugin discovery and supported project/version information.</p></article>
+          <article class="card"><h3>CurseForge</h3><p>Plugin discovery using a user-provided API key stored through the application's credential manager. API access remains subject to CurseForge approval and terms.</p></article>
+          <article class="card"><h3>SpigotMC / Spiget</h3><p>Plugin discovery with official-page fallbacks where provider data is unavailable.</p></article>
+          <article class="card"><h3>PaperMC</h3><p>Paper server builds through the official Fill API, with download verification and Java requirement checks.</p></article>
+          <article class="card"><h3>Playit.gg</h3><p>Management of the official Playit agent and display of available tunnel addresses.</p></article>
+          <article class="card"><h3>Local workspace</h3><p>Server files, databases, backups, restore points, and application data remain in the configured local workspace.</p></article>
+        </div>
+      </section>
+
+      <section id="technology">
+        <div class="wide">
+          <div class="panel">
+            <h2 class="section-heading">Native, local-first architecture</h2>
+            <p>The desktop interface is built with React and TypeScript. The Tauri application uses a Rust backend and SQLite database for local application data.</p>
+            <div class="stack"><span>Tauri 2</span><span>React 19</span><span>TypeScript</span><span>Rust</span><span>SQLite</span></div>
+          </div>
+          <div class="panel">
+            <h2 class="section-heading">Safety-conscious operations</h2>
+            <p>Downloads are staged and verified. Backups are checked against manifests. Destructive actions require confirmation, and credentials are protected using Windows DPAPI.</p>
+            <p class="note">Actual live data is shown when available. Unavailable information is not presented as if it were real.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="project">
+        <h2 class="section-heading">Explore the project</h2>
+        <p class="section-intro">View the source code, setup requirements, feature details, and project documentation on GitHub.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/probhai1sachin-coder/Deadly-Server-Manager">Open GitHub repository ↗</a>
+          <a class="btn btn-secondary" href="https://github.com/probhai1sachin-coder/Deadly-Server-Manager/issues">Report an issue</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <strong>Deadly Server Manager</strong> · Version 0.1.0<br>
+      An independent Minecraft server management project. Minecraft is a trademark of Microsoft/Mojang; this project is not affiliated with or endorsed by them.
+    </div>
+  </footer>
+</body>
+</html>
